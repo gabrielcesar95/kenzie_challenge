@@ -12,7 +12,7 @@ export class TaskService {
     private tasksRepository: Repository<Task>,
   ) {}
 
-  create(createTaskDto: CreateTaskDto) {
+  create(createTaskDto: CreateTaskDto): Promise<Task> {
     return this.tasksRepository.save(createTaskDto);
   }
 
@@ -20,15 +20,20 @@ export class TaskService {
     return this.tasksRepository.find();
   }
 
-  findOne(id: number) {
+  findOne(id: number): Promise<Task> {
     return this.tasksRepository.findOneBy({ id });
   }
 
-  update(id: number, updateTaskDto: UpdateTaskDto) {
-    return `This action updates a #${id} task`;
+  async update(id: number, updateTaskDto: UpdateTaskDto): Promise<Task> {
+    await this.tasksRepository.update({ id }, updateTaskDto);
+    return this.findOne(id);
   }
 
-  remove(id: number) {
-    return `This action removes a #${id} task`;
+  async remove(id: number) {
+    const entity = await this.findOne(id);
+
+    if (entity) {
+      return this.tasksRepository.remove(entity);
+    }
   }
 }
