@@ -20,7 +20,7 @@ export class TaskService {
     return this.tasksRepository.find();
   }
 
-  findOne(id: number): Promise<Task> {
+  findOne(id: number): Promise<Task | null> {
     return this.tasksRepository.findOneBy({ id });
   }
 
