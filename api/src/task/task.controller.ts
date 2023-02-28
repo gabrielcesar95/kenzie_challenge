@@ -19,7 +19,6 @@ import { UpdateTaskDto } from './dto/update-task.dto';
 export class TaskController {
   constructor(private readonly taskService: TaskService) {}
 
-  // TODO: validations
   @Post()
   create(@Body() createTaskDto: CreateTaskDto) {
     return this.taskService.create(createTaskDto);
@@ -31,7 +30,7 @@ export class TaskController {
   }
 
   @Get(':id')
-  async findOne(@Param('id') id: string) {
+  async findOne(@Param('id') id: number) {
     const task = await this.taskService.findOne(+id);
 
     if (!task) {
@@ -42,7 +41,7 @@ export class TaskController {
   }
 
   @Patch(':id')
-  async update(@Param('id') id: string, @Body() updateTaskDto: UpdateTaskDto) {
+  async update(@Param('id') id: number, @Body() updateTaskDto: UpdateTaskDto) {
     const task = await this.taskService.findOne(+id);
 
     if (!task) {
@@ -53,7 +52,7 @@ export class TaskController {
   }
 
   @Delete(':id')
-  async remove(@Param('id') id: string) {
+  async remove(@Param('id') id: number) {
     const task = await this.taskService.findOne(+id);
 
     if (!task) {
