@@ -1,10 +1,15 @@
 import React from 'react';
+import { QueryClient, QueryClientProvider } from 'react-query';
+import { HomePage } from './pages/HomePage';
+import 'rsuite/dist/rsuite.min.css';
+
+const queryClient = new QueryClient()
 
 function App() {
   return (
-    <div>
-      <h1>todo app</h1>
-    </div>
+    <QueryClientProvider client={queryClient}>
+      <HomePage />
+    </QueryClientProvider>
   );
 }
 
