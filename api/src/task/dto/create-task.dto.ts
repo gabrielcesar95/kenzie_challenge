@@ -7,5 +7,5 @@ export class CreateTaskDto {
   title: string;
 
   @IsBoolean()
-  isChecked: boolean;
+  isChecked = true;
 }
