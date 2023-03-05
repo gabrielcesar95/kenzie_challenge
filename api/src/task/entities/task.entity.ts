@@ -5,7 +5,7 @@ export class Task {
   @PrimaryGeneratedColumn()
   id: number;
 
-  @Column()
+  @Column({ length: 256 })
   title: string;
 
   @Column()
