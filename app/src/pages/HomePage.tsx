@@ -17,7 +17,7 @@ const fetchTasks = async (): Promise<Task[]> => {
 };
 
 export const HomePage: React.FC = () => {
-  const { data: tasks, isLoading } = useQuery('tasks', fetchTasks);
+  const { data: tasks, isLoading } = useQuery('tasks', fetchTasks);  
 
   return (
     <Container>
@@ -25,7 +25,7 @@ export const HomePage: React.FC = () => {
         <h2>Tarefas</h2>
       </Header>
       <Content>
-        <TaskForm onAddTask={() => {}} />
+        <TaskForm />
         {isLoading ? (
           <p>Buscando tarefas...</p>
         ) : (

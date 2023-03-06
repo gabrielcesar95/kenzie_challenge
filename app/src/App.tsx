@@ -3,7 +3,7 @@ import { QueryClient, QueryClientProvider } from 'react-query';
 import { HomePage } from './pages/HomePage';
 import 'rsuite/dist/rsuite.min.css';
 
-const queryClient = new QueryClient()
+export const queryClient = new QueryClient()
 
 function App() {
   return (
