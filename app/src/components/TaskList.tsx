@@ -5,10 +5,9 @@ import { TaskItem } from './TaskItem';
 
 type TaskListProps = {
   tasks: Task[];
-  onEdit: (task: Task) => void;
 };
 
-export const TaskList: React.FC<TaskListProps> = ({ tasks, onEdit }) => {
+export const TaskList: React.FC<TaskListProps> = ({ tasks }) => {
   return (
     <List>
       {
@@ -17,7 +16,6 @@ export const TaskList: React.FC<TaskListProps> = ({ tasks, onEdit }) => {
             <TaskItem
               key={task.id}
               task={task}
-              onEdit={() => onEdit(task)}
             />
           ))
           : (

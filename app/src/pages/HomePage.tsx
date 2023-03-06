@@ -31,7 +31,6 @@ export const HomePage: React.FC = () => {
         ) : (
           <TaskList
             tasks={tasks || []}
-            onEdit={() => {}}
           />
         )}
       </Content>
