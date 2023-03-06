@@ -3,12 +3,10 @@ import CloseIcon from '@rsuite/icons/Close';
 import { Checkbox, FlexboxGrid, IconButton, List } from 'rsuite';
 import { useMutation } from 'react-query';
 import { queryClient } from '../App';
+import { Task } from '../pages/HomePage';
 
 type TaskItemProps = {
-  id: number;
-  title: string;
-  isChecked: boolean;
-  onCheck: () => void;
+  task: Task
   onEdit: () => void;
 };
 
@@ -17,28 +15,37 @@ const deleteTask = async (id: number): Promise<void> => {
   queryClient.invalidateQueries('tasks');
 };
 
+const updateTask = async (task: Task): Promise<void> => {
+  await fetch(`http://localhost:3001/task/${task.id}`, {
+    method: 'PATCH',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify(task),
+  });
+  queryClient.invalidateQueries('tasks');
+};
+
 export const TaskItem: React.FC<TaskItemProps> = ({
-  title,
-  isChecked,
-  id,
-  onCheck,
+  task,
   onEdit,
 }) => {
   const { mutate: deleteTaskMutation } = useMutation(deleteTask);
+  const { mutate: updateTaskMutation } = useMutation(updateTask);
 
   return (
     <List.Item>
       <FlexboxGrid align="middle">
         <FlexboxGrid.Item colspan={1}>
-          <Checkbox checked={isChecked} onChange={onCheck} />
+          <Checkbox checked={task.isChecked} onChange={() => {
+            updateTaskMutation({ ...task, isChecked: !task.isChecked });
+          }} />
         </FlexboxGrid.Item>
         <FlexboxGrid.Item colspan={22}>
-          <span onClick={onEdit}>{title}</span>
+          <span onClick={onEdit} style={{textDecoration: task.isChecked ? 'line-through' : 'auto'}}>{task.title}</span>
         </FlexboxGrid.Item>
         <FlexboxGrid.Item>
           <IconButton
             appearance="subtle"
-            onClick={() => {deleteTaskMutation(id)}}
+            onClick={() => {deleteTaskMutation(task.id)}}
             icon={<CloseIcon/>}
           />
         </FlexboxGrid.Item>
