@@ -17,7 +17,7 @@ const fetchTasks = async (): Promise<Task[]> => {
 };
 
 export const HomePage: React.FC = () => {
-  const { data: tasks, isLoading } = useQuery('tasks', fetchTasks);  
+  const { data: tasks, isLoading } = useQuery('tasks', fetchTasks);
 
   return (
     <Container>
@@ -32,7 +32,6 @@ export const HomePage: React.FC = () => {
           <TaskList
             tasks={tasks || []}
             onCheck={() => {}}
-            onDelete={() => {}}
             onEdit={() => {}}
           />
         )}

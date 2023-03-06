@@ -6,20 +6,19 @@ import { TaskItem } from './TaskItem';
 type TaskListProps = {
   tasks: Task[];
   onCheck: (task: Task) => void;
-  onDelete: (task: Task) => void;
   onEdit: (task: Task) => void;
 };
 
-export const TaskList: React.FC<TaskListProps> = ({ tasks, onCheck, onDelete, onEdit }) => {
+export const TaskList: React.FC<TaskListProps> = ({ tasks, onCheck, onEdit }) => {
   return (
     <List>
       {tasks.map((task) => (
         <TaskItem
           key={task.id}
+          id={task.id}
           title={task.title}
           isChecked={task.isChecked}
           onCheck={() => onCheck(task)}
-          onDelete={() => onDelete(task)}
           onEdit={() => onEdit(task)}
         />
       ))}

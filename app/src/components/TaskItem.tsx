@@ -1,22 +1,31 @@
 import React from 'react';
 import CloseIcon from '@rsuite/icons/Close';
 import { Checkbox, FlexboxGrid, IconButton, List } from 'rsuite';
+import { useMutation } from 'react-query';
+import { queryClient } from '../App';
 
 type TaskItemProps = {
+  id: number;
   title: string;
   isChecked: boolean;
   onCheck: () => void;
-  onDelete: () => void;
   onEdit: () => void;
+};
+
+const deleteTask = async (id: number): Promise<void> => {
+  await fetch(`http://localhost:3001/task/${id}`, { method: 'DELETE' });
+  queryClient.invalidateQueries('tasks');
 };
 
 export const TaskItem: React.FC<TaskItemProps> = ({
   title,
   isChecked,
+  id,
   onCheck,
-  onDelete,
   onEdit,
 }) => {
+  const { mutate: deleteTaskMutation } = useMutation(deleteTask);
+
   return (
     <List.Item>
       <FlexboxGrid align="middle">
@@ -29,7 +38,7 @@ export const TaskItem: React.FC<TaskItemProps> = ({
         <FlexboxGrid.Item>
           <IconButton
             appearance="subtle"
-            onClick={onDelete}
+            onClick={() => {deleteTaskMutation(id)}}
             icon={<CloseIcon/>}
           />
         </FlexboxGrid.Item>
